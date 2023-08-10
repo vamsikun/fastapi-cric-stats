@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from routers.batter import batterRouter
 from routers.bowler import bowlerRouter
 from routers.match import matchRouter
@@ -10,7 +11,8 @@ app = FastAPI()
 origins = [
     "http://192.168.184.6:3000",
     "http://localhost:3000",
-    "http://localhost"
+    "http://localhost",
+    "https://nextjs-cric-stats.vercel.app"
     # Add more origins as needed
 ]
 
