@@ -1,9 +1,10 @@
+import json
 from typing import Annotated
+
 from fastapi import APIRouter, Depends
 from fastapi.encoders import jsonable_encoder
-import json
 
-from database import getCursorForPGDB, rd
+from database import getSession, rd
 from getSQLScripts.matches.getSQLForTeamSummary import getSQLForTeamSummary
 from utils.getSQLQuery import executeSQLQuery
 
@@ -17,11 +18,11 @@ async def getTeamSummary(
     team=1,
     teamType="self",
     innings=None,
-    cursor=Depends(getCursorForPGDB),
+    session=Depends(getSession),
 ):
     redisKey = f"teamSummary_{season}_{team}_{teamType}_{innings}"
-    if rd.exists(redisKey):
-        return json.loads(rd.get(redisKey))
+    # if rd.exists(redisKey):
+    #     return json.loads(rd.get(redisKey))
     sql = getSQLForTeamSummary(season, team, teamType, innings)
     rd.set(
         redisKey,
@@ -29,7 +30,7 @@ async def getTeamSummary(
             jsonable_encoder(
                 executeSQLQuery(
                     sql,
-                    cursor,
+                    session,
                     havingClause="DLS,N/R,Overs Reduced Matches not considered*",
                 )
             )
