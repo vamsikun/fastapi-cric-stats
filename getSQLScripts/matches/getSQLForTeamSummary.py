@@ -203,10 +203,8 @@ def getSQLForTeamSummary(season: str, team: int, teamType: str, innings: int | N
             func.sum(selectStmt.c.opp_sixes).label("sixes"),
             func.round(
                 cast(
-                    func.div(
-                        func.sum((selectStmt.c.opp_runs)),
-                        func.sum(selectStmt.c.opp_legal_deliveries_faced),
-                    ),
+                    func.sum((selectStmt.c.opp_runs))
+                    / func.sum(selectStmt.c.opp_legal_deliveries_faced),
                     Numeric,
                 )
                 * 6,
@@ -229,10 +227,8 @@ def getSQLForTeamSummary(season: str, team: int, teamType: str, innings: int | N
             func.sum(selectStmt.c.sixes).label("sixes"),
             func.round(
                 cast(
-                    func.div(
-                        func.sum((selectStmt.c.runs)),
-                        func.sum(selectStmt.c.legal_deliveries_faced),
-                    ),
+                    func.sum((selectStmt.c.runs))
+                    / func.sum(selectStmt.c.legal_deliveries_faced),
                     Numeric,
                 )
                 * 6,
