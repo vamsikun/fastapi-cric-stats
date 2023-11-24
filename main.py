@@ -12,7 +12,8 @@ origins = [
     "http://192.168.184.6:3000",
     "http://localhost:3000",
     "http://localhost",
-    "https://nextjs-cric-stats.vercel.app"
+    "https://nextjs-cric-stats.vercel.app",
+    "https://nextjs-cric-stats-pwah54eoi-vamsi81523-gmailcom.vercel.app/"
     # Add more origins as needed
 ]
 
